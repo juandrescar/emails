@@ -35,7 +35,7 @@ class AuthenticatedSessionController extends Controller
         if(Auth::user()->name == 'admin') {
             return redirect()->route('users');
         }
-        return redirect()->route('emails');
+        return redirect()->route('mails');
     }
 
     /**

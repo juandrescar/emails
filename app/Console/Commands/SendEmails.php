@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Models\User;
 use App\Models\Mail as Mailto;
+use Carbon\Carbon;
 
 class SendEmails extends Command
 {
@@ -44,6 +45,7 @@ class SendEmails extends Command
         foreach ($mails as $mail) {
             \Mail::to($mail->to)->send(new \App\Mail\Mail($mail));
             $mail->status = true;
+            $mail->email_sent_at = Carbon::now()->format('Y-m-d');
             $mail->save();
         }
     }

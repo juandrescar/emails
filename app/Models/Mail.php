@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Mail extends Model
 {
@@ -14,7 +15,12 @@ class Mail extends Model
         'subject',
         'message',
         'user_id',
-        'status'
+        'status',
+        'email_sent_at'
+    ];
+
+    protected $casts = [
+        'email_sent_at' => 'datetime'
     ];
 
     public function user()
@@ -26,4 +32,11 @@ class Mail extends Model
     {
         return $this->status ? 'Enviado' : 'No enviado'; 
     }
+
+    public function getEmailSentAtFormatAttribute()
+    {
+        $date = Carbon::parse($this->email_sent_at)->format('Y-m-d');
+        return ($this->email_sent_at) ? $date : null;
+    }
+    
 }
