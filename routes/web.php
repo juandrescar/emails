@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\MailController;
 use App\Models\User;
 
 /*
@@ -19,14 +20,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/users', function () {
-    $users = User::all();
-    return view('user.users', ['users' => $users]);
-})->middleware(['auth'])->name('users');
+Route::get('/users', [UserController::class, 'index'])
+        ->middleware('auth')
+        ->name('users');
 
-Route::get('/users/create', function () {
-    return view('user.create');
-})->middleware(['auth'])->name('user.create');
+Route::get('/users/create', [UserController::class, 'create'])
+        ->middleware('auth')
+        ->name('user.create');
 
 Route::get('/users/{userId}/edit', [UserController::class, 'edit'])
         ->middleware('auth')
@@ -43,5 +43,17 @@ Route::put('/users/{userId}', [UserController::class, 'update'])
 Route::delete('/users/{userId}', [UserController::class, 'delete'])
         ->middleware('auth')
         ->name('user.update');
+
+Route::get('/mails/create', [MailController::class, 'create'])
+        ->middleware('auth')
+        ->name('mail.create');
+
+Route::post('/mails', [MailController::class, 'store'])
+        ->middleware('auth')
+        ->name('mail.store');
+
+Route::get('/mails', [MailController::class, 'index'])
+        ->middleware('auth')
+        ->name('mails');
 
 require __DIR__.'/auth.php';

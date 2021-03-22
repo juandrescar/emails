@@ -12,11 +12,19 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('users')" :active="request()->routeIs('users')">
-                        {{ __('Usuarios') }}
+                    @if (Auth::user()->name == 'admin')
+                        <x-nav-link :href="route('users')" :active="request()->routeIs('users')">
+                            {{ __('Usuarios') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('user.create')" :active="request()->routeIs('user.create')">
+                            {{ __('Crear usuario') }}
+                        </x-nav-link>
+                    @endif
+                    <x-nav-link :href="route('mails')" :active="request()->routeIs('mails')">
+                        {{ __('Mails') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('user.create')" :active="request()->routeIs('user.create')">
-                        {{ __('Crear usuario') }}
+                    <x-nav-link :href="route('mail.create')" :active="request()->routeIs('mail.create')">
+                        {{ __('Crear mail') }}
                     </x-nav-link>
                 </div>
             </div>

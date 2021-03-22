@@ -9,6 +9,17 @@ use App\Models\User;
 
 class UserController extends Controller
 {
+    public function index(Request $request)
+    {   
+        $users = User::all();
+        return view('user.users', ['users' => $users]);
+    }
+
+    public function create(Request $request)
+    {   
+        return view('user.create');
+    }
+
     public function store(Request $request)
     {   
         $request->validate([
@@ -26,7 +37,7 @@ class UserController extends Controller
         
         $user = User::create($data);
 
-        return redirect(RouteServiceProvider::HOME);
+        return redirect()->route('users');
     }
 
     public function edit(Request $request)

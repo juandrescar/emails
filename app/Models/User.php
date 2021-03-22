@@ -46,6 +46,11 @@ class User extends Authenticatable
         'birthday' => 'datetime'
     ];
 
+    public function mails()
+    {
+        return $this->hasMany(Mail::class);
+    }
+
     public function getBirthdayFormatAttribute()
     {
         return Carbon::parse($this->birthday)->format('Y-m-d'); 
